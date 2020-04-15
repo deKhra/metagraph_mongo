@@ -61,4 +61,20 @@ class MetagraphModelProcessor:
         else:
             return None
 
+    def edges_by_name(self, name_param: str):
+        """
+        Список всех связей с заданным именем
+        """
+        es = Edge.objects(name=name_param).all()
+        return es
+
+    def first_edge_by_name(self, name_param: str):
+        """
+        Связь с заданным именем (предполагается что имя уникальное)
+        """
+        es = self.edges_by_name(name_param)
+        if len(es) > 0:
+            return es[0]
+        else:
+            return None
 
