@@ -21,32 +21,32 @@ class Edge(VertexGeneric):
 
 
 class Vertex(VertexGeneric):
-    Vertices = ListField(ReferenceField(VertexGeneric))
-    Edges = ListField(ReferenceField(Edge))
-    Parents = ListField(ReferenceField(VertexGeneric))
+    _Vertices = ListField(ReferenceField(VertexGeneric))
+    _Edges = ListField(ReferenceField(Edge))
+    _Parents = ListField(ReferenceField(VertexGeneric))
 
     def __str__(self):
         return 'Вершина: ' + self.name
 
     def add_vertices(self, *verts):
         for v in verts:
-            self.Vertices.append(v)
+            self._Vertices.append(v)
             v.add_parent(self)
         self.save()
 
     def first_subvertex_by_name(self, name_param):
-        for v in self.Vertices:
+        for v in self._Vertices:
             if v.name == name_param:
                 return v
         return None
 
     def add_edges(self, *edges):
         for e in edges:
-            self.Edges.append(e)
+            self._Edges.append(e)
         self.save()
 
     def add_parent(self, vertex):
-        self.Parents.append(vertex)
+        self._Parents.append(vertex)
         self.save()
 
     def print_recursive(self, level: int):
@@ -55,12 +55,12 @@ class Vertex(VertexGeneric):
         """
         DataHelper.PrintWithLevel(str(self), level)
 
-        if len(self.Vertices) > 0:
+        if len(self._Vertices) > 0:
             DataHelper.PrintWithLevel("Вложенные вершины: ", level + 1)
-            for v in self.Vertices:
+            for v in self._Vertices:
                 v.print_recursive(level + 2)
 
-        if len(self.Edges) > 0:
+        if len(self._Edges) > 0:
             DataHelper.PrintWithLevel("Вложенные связи: ", level + 1)
-            for edge in self.Edges:
+            for edge in self._Edges:
                 DataHelper.PrintWithLevel(str(edge), level + 2)

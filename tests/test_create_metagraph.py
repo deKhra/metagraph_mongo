@@ -36,8 +36,8 @@ class Loader:
         arrived = proc.create_edge("прибыл", john, london)
 
         situation_1 = proc.create_vertex("Ситуация_1")
-        situation_1.Vertices = [john, london]
-        situation_1.Edges = [arrived]
+        situation_1.add_vertices(john, london)
+        situation_1.add_edges(arrived)
         situation_1.save()
 
         paul = proc.create_vertex("Пол")
@@ -45,18 +45,18 @@ class Loader:
 
         situation_2 = proc.create_vertex("Ситуация_2")
         situation_2.add_vertices(paul, situation_1)
-        situation_2.Edges = [noted_sit_1]
+        situation_2.add_edges(noted_sit_1)
 
         james = proc.create_vertex("Джеймс")
         noted_sit_2 = proc.create_edge("отметил", james, situation_2)
 
         situation_3 = proc.create_vertex("Ситуация_3")
-        situation_3.Vertices = [james, situation_2]
-        situation_3.Edges = [noted_sit_2]
+        situation_3.add_vertices(james, situation_2)
+        situation_3.add_edges(noted_sit_2)
         situation_3.save()
 
         example_1 = proc.create_vertex(Loader.example_vertex_name_1)
-        example_1.Vertices = [situation_3]
+        example_1.add_vertices(situation_3)
         example_1.save()
 
         # Пример 2 (соответствует рисунку 7 в статье)
@@ -64,7 +64,7 @@ class Loader:
         # in order to meet his classmates James and Paul
 
         classmates = proc.create_vertex("одноклассники")
-        classmates.Vertices = [james, paul]
+        classmates.add_vertices(james, paul)
         classmates.save()
 
         living = proc.create_edge("живущие", classmates, london)
@@ -73,8 +73,8 @@ class Loader:
         arrived_2 = proc.create_edge("прибыл", john, london)
 
         example_2 = proc.create_vertex(Loader.example_vertex_name_2)
-        example_2.Vertices = [john, london, classmates]
-        example_2.Edges = [living, meet, arrived_2]
+        example_2.add_vertices(john, london, classmates)
+        example_2.add_edges(living, meet, arrived_2)
         example_2.save()
 
 
