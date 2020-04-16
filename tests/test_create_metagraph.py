@@ -42,12 +42,10 @@ class Loader:
 
         paul = proc.create_vertex("Пол")
         noted_sit_1 = proc.create_edge("отметил", paul, situation_1)
-        noted_sit_1.add_attr(AttributeString(name="время", value="16:00"))
 
         situation_2 = proc.create_vertex("Ситуация_2")
-        situation_2.add_vertex(paul, situation_1)
+        situation_2.add_vertices(paul, situation_1)
         situation_2.Edges = [noted_sit_1]
-        situation_2.add_attr(AttributeString(name="время", value="16:00"))
 
         james = proc.create_vertex("Джеймс")
         noted_sit_2 = proc.create_edge("отметил", james, situation_2)
@@ -73,8 +71,6 @@ class Loader:
         meet = proc.create_edge("встретиться", john, classmates)
 
         arrived_2 = proc.create_edge("прибыл", john, london)
-        arrived_2.add_attr(AttributeString(name="время", value="16:00"))
-        arrived_2.add_attr(AttributeString(name="транспорт", value="поезд"))
 
         example_2 = proc.create_vertex(Loader.example_vertex_name_2)
         example_2.Vertices = [john, london, classmates]
