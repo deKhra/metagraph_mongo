@@ -45,7 +45,7 @@ class Loader:
         noted_sit_1.add_attr(AttributeString(name="время", value="16:00"))
 
         situation_2 = proc.create_vertex("Ситуация_2")
-        situation_2.Vertices = [paul, situation_1]
+        situation_2.add_vertex(paul, situation_1)
         situation_2.Edges = [noted_sit_1]
         situation_2.add_attr(AttributeString(name="время", value="16:00"))
 

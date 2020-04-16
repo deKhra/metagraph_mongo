@@ -8,6 +8,7 @@ from metagraph.data_helper import DataHelper
 Метаграфовая модель данных, реализованная в mongodb с использованием mongoengine
 """
 
+
 class AttributeGeneric(EmbeddedDocument):
     name = StringField()
     meta = {'allow_inheritance': True}
@@ -62,9 +63,16 @@ class Edge(VertexGeneric):
 class Vertex(VertexGeneric):
     Vertices = ListField(ReferenceField(VertexGeneric))
     Edges = ListField(ReferenceField(Edge))
+    Parents = ListField(ReferenceField(VertexGeneric))
 
     def __str__(self):
         return 'Вершина: ' + self.name
+
+    def add_vertex(self, *verts):
+        for v in verts:
+            self.Vertices.append(v)
+            v.add_parent(self)
+        self.save()
 
     def print_recursive(self, level: int):
         """
@@ -92,8 +100,6 @@ class Vertex(VertexGeneric):
                     for edge_attr in edge.Attributes:
                         edge_attr_str = edge_attr.name + ' = ' + str(edge_attr.value)
                         DataHelper.PrintWithLevel(edge_attr_str, level + 4)
-
-
 
     def attribute_by_name(self, attr_name):
         for attr in self.Attributes:
@@ -129,4 +135,6 @@ class Vertex(VertexGeneric):
                 return v
         return None
 
-
+    def add_parent(self, vertex):
+        self.Parents.append(vertex)
+        self.save()
